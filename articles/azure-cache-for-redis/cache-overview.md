@@ -15,7 +15,7 @@ Azure Cache for Redis provides an in-memory data store based on the [Redis](http
 
 Azure Cache for Redis offers both the Redis open-source (OSS Redis) and a commercial product from Redis Inc. (Redis Enterprise) as a managed service. It provides secure and dedicated Redis server instances and full Redis API compatibility. The service is operated by Microsoft, hosted on Azure, and usable by any application within or outside of Azure.
 
-Azure Cache for Redis can be used as a distributed data or content cache, a session store, a message broker, and more. It can be deployed as a standalone. Or, it can be deployed along with other Azure database services, such as Azure SQL or Azure Cosmos DB.
+Azure Cache for Redis can be used as a distributed data or content cache, a session store, a message broker, and more. It can be deployed standalone. Or, it can be deployed along with other Azure database services, such as Azure SQL or Azure Cosmos DB.
 
 ## Key scenarios
 
@@ -54,18 +54,19 @@ The [Azure Cache for Redis Pricing](https://azure.microsoft.com/pricing/details/
 | [Service Level Agreement (SLA)](https://azure.microsoft.com/support/legal/sla/cache/v1_0/) |-|✔|✔|✔|✔|
 | Data encryption in transit |✔|✔|✔|✔|✔|
 | [Network isolation](cache-private-link.md) |✔|✔|✔|✔|✔|
-| [Scaling](cache-how-to-scale.md) |✔|✔|✔|-|-|
+| [Scaling](cache-how-to-scale.md) |✔|✔|✔|Preview|Preview|
 | [OSS clustering](cache-how-to-premium-clustering.md) |-|-|✔|✔|✔|
 | [Data persistence](cache-how-to-premium-persistence.md) |-|-|✔|Preview|Preview|
 | [Zone redundancy](cache-how-to-zone-redundancy.md) |-|-|✔|✔|✔|
-| [Geo-replication](cache-how-to-geo-replication.md) |-|-|✔|✔|✔|
+| [Geo-replication](cache-how-to-geo-replication.md) |-|-|✔ (Passive) |✔ (Active) |✔ (Active) |
+| [Connection audit logs](cache-monitor-diagnostic-settings.md) |-|-|✔ (Poll-based)|✔ (Event-based)|✔ (Event-based)|
 | [Redis Modules](cache-redis-modules.md) |-|-|-|✔|Preview|
 | [Import/Export](cache-how-to-import-export-data.md) |-|-|✔|✔|✔|
 | [Reboot](cache-administration.md#reboot) |✔|✔|✔|-|-|
 | [Scheduled updates](cache-administration.md#schedule-updates) |✔|✔|✔|-|-|
 
 > [!NOTE]
-> The Enterprise Flash tier currently supports only the RedisJSON and RediSearch modules in preview. 
+> The Enterprise Flash tier currently supports only the RediSearch module (in preview) and the RedisJSON module. 
 
 ### Choosing the right tier
 
@@ -79,7 +80,7 @@ Consider the following options when choosing an Azure Cache for Redis tier:
 - **High availability**: Azure Cache for Redis provides multiple [high availability](cache-high-availability.md) options. It guarantees that a Standard, Premium, or Enterprise cache is available according to our [SLA](https://azure.microsoft.com/support/legal/sla/cache/v1_0/). The SLA only covers connectivity to the cache endpoints. The SLA doesn't cover protection from data loss. We recommend using the Redis data persistence feature in the Premium and Enterprise tiers to increase resiliency against data loss.
 - **Data persistence**: The Premium and Enterprise tiers allow you to persist the cache data to an Azure Storage account and a Managed Disk respectively. Underlying infrastructure issues might result in potential data loss. We recommend using the Redis data persistence feature in these tiers to increase resiliency against data loss. Azure Cache for Redis offers both RDB and AOF (preview) options. Data persistence can be enabled through Azure portal and CLI. For the Premium tier, see [How to configure persistence for a Premium Azure Cache for Redis](cache-how-to-premium-persistence.md).
 - **Network isolation**: Azure Private Link and Virtual Network (VNET) deployments provide enhanced security and traffic isolation for your Azure Cache for Redis. VNET allows you to further restrict access through network access control policies. For more information, see [Azure Cache for Redis with Azure Private Link](cache-private-link.md) and [How to configure Virtual Network support for a Premium Azure Cache for Redis](cache-how-to-premium-vnet.md).
-- **Redis Modules**: Enterprise tiers support [RediSearch](https://docs.redis.com/latest/modules/redisearch/), [RedisBloom](https://docs.redis.com/latest/modules/redisbloom/), [RedisTimeSeries](https://docs.redis.com/latest/modules/redistimeseries/), and [RedisJSON](https://docs.redis.com/latest/modules/redisjson/) (preview). These modules add new data types and functionality to Redis.
+- **Redis Modules**: Enterprise tiers support [RediSearch](https://docs.redis.com/latest/modules/redisearch/), [RedisBloom](https://docs.redis.com/latest/modules/redisbloom/), [RedisTimeSeries](https://docs.redis.com/latest/modules/redistimeseries/), and [RedisJSON](https://docs.redis.com/latest/modules/redisjson/). These modules add new data types and functionality to Redis.
 
 You can scale your cache from the Basic tier up to Premium after it has been created. Scaling down to a lower tier isn't supported currently. For step-by-step scaling instructions, see [How to Scale Azure Cache for Redis](cache-how-to-scale.md) and [How to scale - Basic, Standard, and Premium tiers](cache-how-to-scale.md#how-to-scale---basic-standard-and-premium-tiers).
 
@@ -92,10 +93,9 @@ The Enterprise tiers rely on Redis Enterprise, a commercial variant of Redis fro
 - If you use a private Marketplace, it must contain the Redis Inc. Enterprise offer.
 
 > [!IMPORTANT]
-> Azure Cache for Redis Enterprise requires standard network Load Balancers that are charged separately from cache instances themselves. For more information, see [Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/).
+> Azure Cache for Redis Enterprise requires standard network Load Balancers that are charged separately from cache instances themselves. Currently, these charges are absorbed by Azure Cache for Redis and not passed on to customers. This may change in the future. For more information, see [Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/).
 >
-> If an Enterprise cache is configured for multiple Availability Zones, data transfer is billed at the [standard network bandwidth rates](https://azure.microsoft.com/pricing/details/bandwidth/)
-> starting from July 1, 2022.
+> If an Enterprise cache is configured for multiple Availability Zones, data transfer charges are absorbed by Azure cache for Redis and not passed to customers. This may change in the future, where data transfer would be billed at the [standard network bandwidth rates](https://azure.microsoft.com/pricing/details/bandwidth/)
 >
 > In addition, data persistence adds Managed Disks. The use of these resources is free during the public preview of Enterprise data persistence. This might change when the feature becomes generally available.
 

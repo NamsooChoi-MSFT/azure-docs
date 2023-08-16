@@ -23,6 +23,7 @@ After the application has been registered, you can check or change the account t
 | Accounts in this organizational directory only (Single tenant) | `AzureADMyOrg` |
 | Accounts in any organizational directory (Any Azure AD directory - Multitenant) | `AzureADMultipleOrgs` |
 | Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox) | `AzureADandPersonalMicrosoftAccount` |
+| Personal Microsoft accounts only | `PersonalMicrosoftAccount` |
 
 If you change this property you may need to change other properties first. 
 
@@ -32,7 +33,7 @@ See the following table for the validation differences of various properties for
 
 | Property | `AzureADMyOrg`  | `AzureADMultipleOrgs` | `AzureADandPersonalMicrosoftAccount` and `PersonalMicrosoftAccount`  |
 | -------- | --------------- | --------------------- | -------------------------------------------------------------------- |
-| Application ID URI (`identifierURIs`)    | Must be unique in the tenant <br><br> `urn://` schemes are supported <br><br> Wildcards aren't supported <br><br> Query strings and fragments are supported <br><br> Maximum length of 255 characters <br><br> No limit\* on number of identifierURIs                                           | Must be globally unique <br><br> `urn://` schemes are supported <br><br> Wildcards aren't supported <br><br> Query strings and fragments are supported <br><br> Maximum length of 255 characters <br><br> No limit\* on number of identifierURIs                                                                                        | Must be globally unique <br><br> urn:// schemes aren't supported <br><br> Wildcards, fragments, and query strings aren't supported <br><br> Maximum length of 120 characters <br><br> Maximum of 50 identifierURIs |
+| Application ID URI (`identifierURIs`)    | Must be unique in the tenant <br><br> `urn://` schemes are supported <br><br> Wildcards aren't supported <br><br> Query strings and fragments are supported <br><br> Maximum length of 255 characters <br><br> No limit\* on number of identifierURIs                                           | Must be globally unique <br><br> `urn://` schemes are supported <br><br> Wildcards aren't supported <br><br> Query strings and fragments are supported <br><br> Maximum length of 255 characters <br><br> No limit\* on number of identifierURIs                                                                                        | Must be globally unique <br><br> `urn://` schemes aren't supported <br><br> Wildcards, fragments, and query strings aren't supported <br><br> Maximum length of 120 characters <br><br> Maximum of 50 identifierURIs |
 | National clouds                             | Supported                 | Supported                | Not supported                          |
 | Certificates (`keyCredentials`)             | Symmetric signing key     | Symmetric signing key    | Encryption and asymmetric signing key  |
 | Client secrets (`passwordCredentials`)      | No limit\*                | No limit\*               | If liveSDK is enabled: Maximum of two client secrets  |
